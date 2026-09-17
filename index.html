@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Étude n.04 — couleur, forme, mouvement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0A0C;
+    --paper:#F1EDE6;
+    --violet:#7C3AED;
+    --magenta:#E94BA0;
+    --amber:#F5A623;
+    --teal:#2DD4BF;
+    --dim:#6B6A72;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Bricolage Grotesque', sans-serif;
+    overflow-x:hidden;
+    cursor:default;
+  }
+
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:var(--dim);
+    letter-spacing:0.02em;
+  }
+
+  /* cursor glow */
+  #glow{
+    position:fixed;
+    top:0; left:0;
+    width:480px; height:480px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(124,58,237,0.16) 0%, transparent 65%);
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:1;
+    transition:background 0.6s ease;
+  }
+
+  section{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:0 8vw;
+    overflow:hidden;
+  }
+
+  .blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:0.55;
+    z-index:0;
+  }
+
+  /* ---------- INTRO ---------- */
+
+  .intro{ justify-content:flex-start; }
+
+  .intro .blob-a{
+    width:520px; height:520px;
+    background:var(--violet);
+    top:-10%; left:-8%;
+    animation:driftA 22s ease-in-out infinite;
+  }
+  .intro .blob-b{
+    width:420px; height:420px;
+    background:var(--magenta);
+    bottom:-15%; right:5%;
+    animation:driftB 18s ease-in-out infinite;
+  }
+
+  @keyframes driftA{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(60px,40px) scale(1.12); }
+  }
+  @keyframes driftB{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-50px,-30px) scale(0.9); }
+  }
+
+  .intro-content{ position:relative; z-index:2; max-width:680px; }
+
+  .index{ margin-bottom:26px; }
+
+  .intro h1{
+    font-size:clamp(3.2rem, 8vw, 6.4rem);
+    font-weight:700;
+    line-height:0.98;
+    letter-spacing:-0.02em;
+    margin:0;
+  }
+
+  .intro .sub{
+    margin-top:22px;
+    max-width:38ch;
+    color:#CFCBD8;
+    font-size:1.05rem;
+    font-weight:300;
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:48px;
+    left:8vw;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .scroll-cue .bar{
+    width:38px; height:1px;
+    background:var(--dim);
+    position:relative;
+    overflow:hidden;
+  }
+  .scroll-cue .bar::after{
+    content:'';
+    position:absolute; top:0; left:-38px;
+    width:38px; height:1px;
+    background:var(--paper);
+    animation:slide 2.2s ease-in-out infinite;
+  }
+  @keyframes slide{
+    0%{ left:-38px; } 100%{ left:38px; }
+  }
+
+  /* ---------- STUDIES ---------- */
+
+  .study{
+    justify-content:center;
+  }
+
+  .study .word{
+    font-size:clamp(4.5rem, 16vw, 13rem);
+    font-weight:700;
+    line-height:0.86;
+    letter-spacing:-0.03em;
+    position:relative;
+    z-index:2;
+    mix-blend-mode:normal;
+  }
+
+  .study .caption{
+    position:relative;
+    z-index:2;
+    margin-top:20px;
+    max-width:34ch;
+    font-weight:300;
+    font-size:0.98rem;
+  }
+
+  /* study: forme */
+  .s-forme{ justify-content:flex-start; }
+  .s-forme .word{ color:var(--paper); }
+  .s-forme .caption{ color:#C9C6D2; }
+  .s-forme .blob-c{
+    width:600px; height:600px;
+    background:var(--teal);
+    top:10%; right:-12%;
+    animation:driftA 26s ease-in-out infinite;
+  }
+  .s-forme svg.ring{
+    position:absolute;
+    top:12%; right:8%;
+    width:340px; height:340px;
+    z-index:1;
+    animation:spin 40s linear infinite;
+  }
+  @keyframes spin{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+
+  /* study: couleur */
+  .s-couleur{ justify-content:flex-end; text-align:right; }
+  .s-couleur .word{
+    background:linear-gradient(120deg, var(--amber), var(--magenta) 55%, var(--violet));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .s-couleur .caption{ color:#D8CFC2; margin-left:auto; }
+  .s-couleur .blob-d{
+    width:560px; height:560px;
+    background:var(--amber);
+    bottom:-18%; left:-10%;
+    animation:driftB 20s ease-in-out infinite;
+  }
+  .s-couleur .blob-e{
+    width:360px; height:360px;
+    background:var(--magenta);
+    top:0%; left:20%;
+    animation:driftA 24s ease-in-out infinite;
+  }
+
+  /* study: mouvement */
+  .s-mouvement{ justify-content:center; text-align:center; }
+  .s-mouvement .word{ color:var(--paper); }
+  .s-mouvement .caption{ margin-left:auto; margin-right:auto; color:#C9C6D2; }
+  .s-mouvement .blob-f{
+    width:500px; height:500px;
+    background:var(--violet);
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    animation:pulse 6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:0.35; transform:translate(-50%,-50%) scale(1); }
+    50%{ opacity:0.6; transform:translate(-50%,-50%) scale(1.25); }
+  }
+  .s-mouvement .dots{
+    position:absolute;
+    inset:0;
+    z-index:1;
+  }
+
+  /* study: silence */
+  .s-silence{
+    justify-content:flex-start;
+    min-height:80vh;
+  }
+  .s-silence .word{
+    color:var(--ink);
+    -webkit-text-stroke:1.5px var(--dim);
+  }
+  .s-silence .caption{ color:var(--dim); }
+
+  /* ---------- FOOTER ---------- */
+
+  footer{
+    padding:60px 8vw 70px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    border-top:1px solid #201F26;
+  }
+
+  footer .mono{ line-height:1.8; }
+
+  @media (max-width:720px){
+    section{ padding:0 7vw; }
+    .s-forme svg.ring{ display:none; }
+    footer{ flex-direction:column; gap:18px; align-items:flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .blob, .scroll-cue .bar::after, .s-forme svg.ring, .s-mouvement .blob-f{ animation:none; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="glow"></div>
+
+  <section class="intro">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="intro-content">
+      <div class="index mono">ÉTUDE N.04 — SANS FONCTION</div>
+      <h1>Une page qui<br>n'existe que<br>pour être<br>regardée.</h1>
+      <p class="sub">Pas de produit, pas de message, pas de bouton qui mène quelque part. Juste de la couleur, de la forme et un peu de mouvement, assemblés pour le plaisir de l'œil.</p>
+    </div>
+    <div class="scroll-cue">
+      <span class="bar"></span>
+      <span class="mono">défiler</span>
+    </div>
+  </section>
+
+  <section class="study s-forme">
+    <div class="blob blob-c"></div>
+    <svg class="ring" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="98" stroke="#F1EDE6" stroke-width="0.6" stroke-dasharray="2 6"/>
+      <circle cx="100" cy="100" r="70" stroke="#F1EDE6" stroke-width="0.6"/>
+    </svg>
+    <div>
+      <div class="mono" style="margin-bottom:18px;">01</div>
+      <div class="word">Forme</div>
+      <p class="caption">Un cercle n'a besoin de rien justifier. Il tient debout tout seul.</p>
+    </div>
+  </section>
+
+  <section class="study s-couleur">
+    <div class="blob blob-d"></div>
+    <div class="blob blob-e"></div>
+    <div>
+      <div class="mono" style="margin-bottom:18px;">02</div>
+      <div class="word">Couleur</div>
+      <p class="caption">Trois teintes qui n'avaient aucune raison de se rencontrer, et qui s'entendent bien.</p>
+    </div>
+  </section>
+
+  <section class="study s-mouvement">
+    <div class="blob blob-f"></div>
+    <div>
+      <div class="mono" style="margin-bottom:18px;">03</div>
+      <div class="word">Mouvement</div>
+      <p class="caption">Rien ne se déplace vraiment. Tout respire, lentement, sans arriver nulle part.</p>
+    </div>
+  </section>
+
+  <section class="study s-silence">
+    <div>
+      <div class="mono" style="margin-bottom:18px;">04</div>
+      <div class="word">Vide</div>
+      <p class="caption">La dernière étude est presque vide. C'est volontaire — l'œil a besoin de se reposer aussi.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="mono">ÉTUDE N.04<br>couleur / forme / mouvement</div>
+    <div class="mono">aucune fonction, aucune conversion,<br>juste une page</div>
+  </footer>
+
+  <script>
+    const glow = document.getElementById('glow');
+    const palette = ['rgba(124,58,237,0.16)','rgba(233,75,160,0.15)','rgba(245,166,35,0.14)','rgba(45,212,191,0.14)'];
+    let colorIndex = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
+
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = Array.from(sections).indexOf(entry.target) % palette.length;
+          glow.style.background = `radial-gradient(circle, ${palette[idx]} 0%, transparent 65%)`;
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+
+</body>
+</html>
